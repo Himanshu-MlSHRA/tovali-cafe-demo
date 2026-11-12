@@ -1,8 +1,8 @@
-# Tovali
+# Tovali — cafe demo website
 
-Website for Tovali, an all-day cafe — croissants and chai in the morning, ramen and pasta at night.
+Demo website for Tovali, a fictional all-day cafe — croissants and chai in the morning, ramen and pasta at night.
 
-Live: https://tovali.vercel.app
+Live: https://tovali-cafe-demo.vercel.app
 
 ## What's in it
 
