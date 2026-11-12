@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+html { background: #F3EBDD; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+body {
+  @apply bg-cream text-ink font-body antialiased;
+  overflow-x: clip;
+}
+::selection { background: #A3241A; color: #FBF6EC; }
+
+/* soft paper grain over everything */
+.grain::after {
+  content: ""; position: fixed; inset: -50%; z-index: 60; pointer-events: none; opacity: .07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 8s steps(10) infinite;
+}
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0) } 10% { transform: translate(-5%, -10%) } 30% { transform: translate(3%, -15%) }
+  50% { transform: translate(12%, 9%) } 70% { transform: translate(9%, 4%) } 90% { transform: translate(-1%, 7%) }
+}
+
+.line-mask { display: inline-block; vertical-align: top; overflow: hidden; padding-bottom: .04em; margin-bottom: -.04em; }
+.char { display: inline-block; will-change: transform; }
+
+/* buttons */
+.btn {
+  @apply relative inline-flex items-center justify-center gap-3 rounded-full px-7 h-14 font-semibold text-[15px] tracking-tight overflow-hidden;
+  transition: color .35s ease;
+}
+.btn > span { position: relative; z-index: 1; display: inline-flex; align-items: center; gap: .6rem; }
+.btn::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; transform: translateY(101%);
+  transition: transform .45s cubic-bezier(.7, 0, .2, 1);
+}
+.btn:hover::before { transform: translateY(0); }
+.btn-red { @apply bg-tomato text-paper; }
+.btn-red::before { @apply bg-ink; }
+.btn-ink { @apply bg-ink text-paper; }
+.btn-ink::before { @apply bg-tomato; }
+.btn-line { @apply border-2 border-ink text-ink; }
+.btn-line::before { @apply bg-ink; }
+.btn-line:hover { @apply text-paper; }
+.btn:active { transform: scale(.97); }
+
+.tag { @apply inline-flex items-center rounded-full border border-ink/80 px-3 py-1 text-[12px] font-semibold uppercase tracking-wider; }
+
+/* marquee */
+.marquee { display: flex; width: max-content; will-change: transform; }
+
+/* custom cursor (only on mouse devices) */
+.cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 80; border-radius: 999px; }
+.cursor-dot { width: 8px; height: 8px; margin: -4px 0 0 -4px; background: #A3241A; }
+.cursor-ring {
+  width: 44px; height: 44px; margin: -22px 0 0 -22px; border: 1.5px solid #1E1410;
+  display: grid; place-items: center; font: 600 11px/1 "Inter Tight", sans-serif; letter-spacing: .08em; text-transform: uppercase; color: #FBF6EC;
+  transition: width .3s ease, height .3s ease, margin .3s ease, background-color .3s ease, border-color .3s ease;
+}
+.cursor-ring.is-big { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: #A3241A; border-color: #A3241A; }
+@media (hover: none), (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
+@media (hover: hover) and (pointer: fine) { html.has-cursor, html.has-cursor a, html.has-cursor button { cursor: none; } }
+
+/* focus */
+:focus-visible { outline: 3px solid #F0B23A; outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .grain::after { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
